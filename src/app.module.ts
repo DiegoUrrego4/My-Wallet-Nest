@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ClientModule } from './client/client.module';
-import { AccountModule } from './account/account.module';
-import { AplicationModule } from './app/app.module';
-import { MovementModule } from './movement/movement.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+
+import { ClientModule } from './client/client.module';
+import { AccountModule } from './account/account.module';
+import { AplicationModule } from './aplication/aplication.module';
+import { MovementModule } from './movement/movement.module';
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { ConfigModule } from '@nestjs/config';
     AccountModule,
     AplicationModule,
     MovementModule,
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],
