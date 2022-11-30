@@ -3,7 +3,7 @@
 ## Register:
 
 <span style="color:orange">[POST]</span> <span style="font-size:1.2em;">
-/api/v1/client/signup
+/api/v1/client/signup ✅
 </span>
 
 ```
