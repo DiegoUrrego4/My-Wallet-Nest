@@ -14,8 +14,8 @@ export class ClientService {
     return `This action returns all client`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} client`;
+  findExistedClient(term: string) {
+    return `This action returns a #${term} client`;
   }
 
   update(id: number, updateClientDto: UpdateClientDto) {

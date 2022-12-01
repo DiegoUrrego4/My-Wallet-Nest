@@ -25,9 +25,9 @@ export class ClientController {
     return this.clientService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.clientService.findOne(+id);
+  @Get(':term')
+  findOne(@Param('term') term: string) {
+    return this.clientService.findExistedClient(term);
   }
 
   @Patch(':id')

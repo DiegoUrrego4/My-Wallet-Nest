@@ -4,12 +4,12 @@ import { UpdateAplicationDto } from './dto/update-aplication.dto';
 
 @Injectable()
 export class AplicationService {
-  create(createAplicationDto: CreateAplicationDto) {
+  changeAppColor(createAplicationDto: CreateAplicationDto) {
     return 'This action adds a new aplication';
   }
 
-  findAll() {
-    return `This action returns all aplication`;
+  findAppColor() {
+    return { color: 'blue' };
   }
 
   findOne(id: number) {
