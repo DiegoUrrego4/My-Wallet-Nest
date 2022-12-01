@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { AplicationService } from './aplication.service';
 import { CreateAplicationDto } from './dto/create-aplication.dto';
@@ -20,14 +21,9 @@ export class AplicationController {
     return this.aplicationService.changeAppColor(createAplicationDto);
   }
 
-  @Get('theme')
-  findAll() {
+  @Get('theme/:id')
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.aplicationService.findAppColor();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.aplicationService.findOne(+id);
   }
 
   @Patch(':id')

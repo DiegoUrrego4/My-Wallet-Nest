@@ -123,8 +123,8 @@ availableCapacity: 49000000
 
 ```
   request: {
-  loanReason: 'Prestamo fin de mes',
-  loanAmount: 1000000,
+  paymentReason: 'Prestamo fin de mes',
+  paymentAmount: 1000000,
   }
 
 response [201] {
@@ -248,11 +248,11 @@ response [200] {
 ```
  request: {
   clientId: '89b40934-3e4a-449e-ac71-88d2f78b12ad'
-  newColorTheme: 'purple'
+  appColorTheme: 'purple'
 }
 
 response [200] {
-	newColorTheme: 'purple'
+	appColorTheme: 'purple'
   	changed: true
 }
 ```
