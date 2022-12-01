@@ -1,7 +1,7 @@
 import { Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
 import { AccountEntity } from '../../account/entities/account.entity';
-import { TokenEntity } from 'src/token/entities/token.entity';
-import { AplicationEntity } from 'src/aplication/entities/aplication.entity';
+import { TokenEntity } from '../../token/entities/token.entity';
+import { AplicationEntity } from '../../aplication/entities/aplication.entity';
 
 @Index('client_cli_email_Idx', ['cliEmail'], { unique: true })
 @Index('pkclient', ['cliId'], { unique: true })

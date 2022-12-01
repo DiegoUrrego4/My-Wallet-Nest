@@ -1,5 +1,5 @@
 import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
-import { ClientEntity } from 'src/client/entities/client.entity';
+import { ClientEntity } from '../../client/entities/client.entity';
 
 @Index('pkapp', ['appId'], { unique: true })
 @Index('app_cli_id_Idx', ['cliId'], { unique: true })

@@ -7,15 +7,15 @@ import {
   OneToOne,
 } from 'typeorm';
 
-import { ClientEntity } from 'src/client/entities/client.entity';
-import { MovementEntity } from 'src/movement/entities/movement.entity';
+import { ClientEntity } from '../../client/entities/client.entity';
+import { MovementEntity } from '../../movement/entities/movement.entity';
 
-@Index('pkaccount', ['id'], { unique: true })
+@Index('pkaccount', ['accId'], { unique: true })
 @Index('account_cli_id_Idx', ['clientId'], { unique: true })
 @Entity('account', { schema: 'public' })
 export class AccountEntity {
   @Column('uuid', { primary: true, name: 'acc_id' })
-  id: string;
+  accId: string;
 
   @Column('uuid', { name: 'cli_id' })
   clientId: string;

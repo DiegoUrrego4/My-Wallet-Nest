@@ -22,8 +22,12 @@ export class ClientService {
     return `This action returns all client`;
   }
 
-  findExistedClient(term: string) {
-    return `This action returns a #${term} client`;
+  async findExistedClient(term: string) {
+    const client: ClientEntity | null = await this.clientRepository.findOneBy({
+      cliId: term,
+    });
+    console.log('client :>> ', client);
+    return client;
   }
 
   update(id: number, updateClientDto: UpdateClientDto) {
