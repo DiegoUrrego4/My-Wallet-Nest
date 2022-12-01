@@ -1,9 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MovementService } from './movement.service';
-import { CreateMovementDto } from './dto/create-movement.dto';
-import { UpdateMovementDto } from './dto/update-movement.dto';
+import { CreateMovementDto, CreatePaymentDto, UpdateMovementDto } from './dto';
 
-@Controller('movement')
+@Controller('movements')
 export class MovementController {
   constructor(private readonly movementService: MovementService) {}
 
@@ -12,18 +19,26 @@ export class MovementController {
     return this.movementService.create(createMovementDto);
   }
 
-  @Get()
-  findAll() {
-    return this.movementService.findAll();
+  @Post('loans')
+  getLoan(@Body() createPaymentDto: CreatePaymentDto) {
+    return this.movementService.getLoan(createPaymentDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.movementService.findOne(+id);
+  @Post('payment')
+  payment(@Body() createPaymentDto: CreatePaymentDto) {
+    return this.movementService.payment(createPaymentDto);
+  }
+
+  @Get('movement/:movementId:')
+  findOneMovement(@Param('movementId') movementId: string) {
+    return this.movementService.findOne(movementId);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMovementDto: UpdateMovementDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMovementDto: UpdateMovementDto,
+  ) {
     return this.movementService.update(+id, updateMovementDto);
   }
 

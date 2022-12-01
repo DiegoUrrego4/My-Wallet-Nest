@@ -4,16 +4,18 @@ import { UpdateClientDto } from './dto/update-client.dto';
 
 @Injectable()
 export class ClientService {
-  create(createClientDto: CreateClientDto) {
-    return 'This action adds a new client';
+  createClient(createClientDto: CreateClientDto) {
+    return {
+      token: 'Este es tu nuevo token',
+    };
   }
 
   findAll() {
     return `This action returns all client`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} client`;
+  findExistedClient(term: string) {
+    return `This action returns a #${term} client`;
   }
 
   update(id: number, updateClientDto: UpdateClientDto) {

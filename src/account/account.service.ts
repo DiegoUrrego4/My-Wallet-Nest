@@ -12,8 +12,8 @@ export class AccountService {
     return `This action returns all account`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} account`;
+  findBalance(id: string) {
+    return `This action returns a #${id} balance`;
   }
 
   update(id: number, updateAccountDto: UpdateAccountDto) {

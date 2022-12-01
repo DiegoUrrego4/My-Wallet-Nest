@@ -3,7 +3,7 @@
 ## Register:
 
 <span style="color:orange">[POST]</span> <span style="font-size:1.2em;">
-/api/v1/client/signup
+/api/v1/client/signup ✅
 </span>
 
 ```
@@ -42,7 +42,7 @@ response [201] {
 ## Individual Movements
 
 <span style="color:green">[GET]</span> <span style="font-size:1.2em;">
-/api/v1/movements/movement/:movementId
+/api/v1/movements/movement/:movementId ✅
 </span>
 
 ```
@@ -104,12 +104,12 @@ movements: [
 ## Loans:
 
 <span style="color:green">[GET]</span> <span style="font-size:1.2em;">
-/api/v1/movements/loans
+/api/v1/account/balance/:clientId ✅
 </span>
 
 ```
-request: {
-	AccountId: '89b40934-3e4a-449e-ac71-88d2f78b12ad'
+params: {
+	clientId: '89b40934-3e4a-449e-ac71-88d2f78b12ad'
 }
 
 response [200] {
@@ -118,13 +118,13 @@ availableCapacity: 49000000
 ```
 
 <span style="color:orange">[POST]</span> <span style="font-size:1.2em;">
-/api/v1/movements/loans
+/api/v1/movements/loans ✅
 </span>
 
 ```
   request: {
-  loanReason: 'Prestamo fin de mes',
-  loanAmount: 1000000,
+  paymentReason: 'Prestamo fin de mes',
+  paymentAmount: 1000000,
   }
 
 response [201] {
@@ -165,7 +165,7 @@ availableCapacity: 49000000
 ## Payment:
 
 <span style="color:green">[GET]</span> <span style="font-size:1.2em;">
-/api/v1/movements/payment/:term
+/api/v1/client/:term ✅ -- Validación de si un usuario existe en base de datos o no
 </span>
 
 ```
@@ -177,22 +177,8 @@ response [200] {
 }
 ```
 
-<span style="color:green">[GET]</span> <span style="font-size:1.2em;">
-/api/v1/movements/payment
-</span>
-
-```
-request: {
-	AccountId: '89b40934-3e4a-449e-ac71-88d2f78b12ad'
-}
-
-response [200] {
-accountBalance: 140234543
-}
-```
-
 <span style="color:orange">[POST]</span> <span style="font-size:1.2em;">
-/api/v1/movements/payment
+/api/v1/movements/payment ✅
 </span>
 
 ```
@@ -242,7 +228,7 @@ response [201] {
 ## Change App Theme
 
 <span style="color:yellow">[GET]</span> <span style="font-size:1.2em;">
-/api/v1/app/theme
+/api/v1/app/theme ✅
 </span>
 
 ```
@@ -256,17 +242,17 @@ response [200] {
 ```
 
 <span style="color:yellow">[PATCH]</span> <span style="font-size:1.2em;">
-/api/v1/app/theme
+/api/v1/app/theme ✅
 </span>
 
 ```
  request: {
   clientId: '89b40934-3e4a-449e-ac71-88d2f78b12ad'
-  newColorTheme: 'purple'
+  appColorTheme: 'purple'
 }
 
 response [200] {
-	newColorTheme: 'purple'
+	appColorTheme: 'purple'
   	changed: true
 }
 ```
