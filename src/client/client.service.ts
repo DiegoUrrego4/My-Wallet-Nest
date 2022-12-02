@@ -24,7 +24,7 @@ export class ClientService {
 
   async findExistedClient(term: string) {
     const client: ClientEntity | null = await this.clientRepository.findOneBy({
-      cliId: term,
+      id: term,
     });
     console.log('client :>> ', client);
     return client;

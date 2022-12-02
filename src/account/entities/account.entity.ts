@@ -51,12 +51,12 @@ export class AccountEntity {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
-  @JoinColumn([{ name: 'cli_id', referencedColumnName: 'cliId' }])
+  @JoinColumn([{ name: 'cli_id', referencedColumnName: 'id' }])
   cli: ClientEntity;
 
-  @OneToMany(() => MovementEntity, (movement) => movement.accIdIncome2)
-  movements: MovementEntity[];
+  @OneToMany(() => MovementEntity, (movement) => movement.income)
+  incomes: MovementEntity[];
 
-  @OneToMany(() => MovementEntity, (movement) => movement.accIdOutcome2)
-  movements2: MovementEntity[];
+  @OneToMany(() => MovementEntity, (movement) => movement.outcome)
+  outcomes: MovementEntity[];
 }

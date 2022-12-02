@@ -3,46 +3,46 @@ import { AccountEntity } from '../../account/entities/account.entity';
 import { TokenEntity } from '../../token/entities/token.entity';
 import { AplicationEntity } from '../../aplication/entities/aplication.entity';
 
-@Index('client_cli_email_Idx', ['cliEmail'], { unique: true })
-@Index('pkclient', ['cliId'], { unique: true })
-@Index('client_cli_phone_Idx', ['cliPhone'], { unique: true })
+@Index('client_cli_email_Idx', ['email'], { unique: true })
+@Index('pkclient', ['id'], { unique: true })
+@Index('client_cli_phone_Idx', ['phone'], { unique: true })
 @Entity('client', { schema: 'public' })
 export class ClientEntity {
   @Column('uuid', { primary: true, name: 'cli_id' })
-  cliId: string;
+  id: string;
 
   @Column('character varying', { name: 'cli_full_name', length: 500 })
-  cliFullName: string;
+  fullName: string;
 
   @Column('character varying', { name: 'cli_email', length: 500 })
-  cliEmail: string;
+  email: string;
 
   @Column('character varying', { name: 'cli_phone', length: 500 })
-  cliPhone: string;
+  phone: string;
 
   @Column('character varying', { name: 'cli_photo', length: 500 })
-  cliPhoto: string;
+  photo: string;
 
   @Column('integer', { name: 'cli_state', default: () => '1' })
-  cliState: number;
+  state: number;
 
   @Column('timestamp without time zone', {
     name: 'cli_created_at',
     default: () => 'now()',
   })
-  cliCreatedAt: Date;
+  createdAt: Date;
 
   @Column('timestamp without time zone', {
     name: 'cli_updated_at',
     nullable: true,
   })
-  cliUpdatedAt: Date | null;
+  updatedAt: Date | null;
 
   @Column('timestamp without time zone', {
     name: 'cli_deleted_at',
     nullable: true,
   })
-  cliDeletedAt: Date | null;
+  deletedAt: Date | null;
 
   @OneToOne(() => AccountEntity, (account) => account.cli)
   account: AccountEntity;
