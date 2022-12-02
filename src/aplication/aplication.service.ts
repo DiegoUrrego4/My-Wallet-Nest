@@ -1,15 +1,22 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAplicationDto } from './dto/create-aplication.dto';
 import { UpdateAplicationDto } from './dto/update-aplication.dto';
+import { AplicationEntity } from './entities/aplication.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AplicationService {
-  create(createAplicationDto: CreateAplicationDto) {
+  constructor(
+    @InjectRepository(AplicationEntity)
+    private aplicationRepository: Repository<AplicationEntity>,
+  ) {}
+  changeAppColor(createAplicationDto: CreateAplicationDto) {
     return 'This action adds a new aplication';
   }
 
-  findAll() {
-    return `This action returns all aplication`;
+  findAppColor() {
+    return { color: 'blue' };
   }
 
   findOne(id: number) {
