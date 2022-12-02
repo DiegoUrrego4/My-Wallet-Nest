@@ -31,5 +31,6 @@ import { TokenModule } from './token/token.module';
   ],
   controllers: [AppController],
   providers: [AppService],
+  // exports: ['PG', TypeOrmModule],
 })
 export class AppModule {}

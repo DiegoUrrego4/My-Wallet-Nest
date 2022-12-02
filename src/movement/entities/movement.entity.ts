@@ -33,17 +33,17 @@ export class MovementEntity {
   })
   movDatetime: Date;
 
-  @ManyToOne(() => AccountEntity, (account) => account.movements, {
+  @ManyToOne(() => AccountEntity, (account) => account.incomes, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'acc_id_income', referencedColumnName: 'accId' }])
-  accIdIncome2: AccountEntity;
+  income: AccountEntity;
 
-  @ManyToOne(() => AccountEntity, (account) => account.movements2, {
+  @ManyToOne(() => AccountEntity, (account) => account.outcomes, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
   @JoinColumn([{ name: 'acc_id_outcome', referencedColumnName: 'accId' }])
-  accIdOutcome2: AccountEntity;
+  outcome: AccountEntity;
 }
