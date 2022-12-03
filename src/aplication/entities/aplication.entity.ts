@@ -1,12 +1,13 @@
 import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { ClientEntity } from '../../client/entities/client.entity';
+import { v4 as uuid } from 'uuid';
 
 @Index('pkapp', ['appId'], { unique: true })
 @Index('app_cli_id_Idx', ['cliId'], { unique: true })
 @Entity('app', { schema: 'public' })
 export class AplicationEntity {
   @Column('uuid', { primary: true, name: 'app_id' })
-  appId: string;
+  appId: string = uuid();
 
   @Column('uuid', { name: 'cli_id' })
   cliId: string;

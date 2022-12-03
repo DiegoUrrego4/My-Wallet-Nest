@@ -2,6 +2,8 @@ import { Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
 import { AccountEntity } from '../../account/entities/account.entity';
 import { TokenEntity } from '../../token/entities/token.entity';
 import { AplicationEntity } from '../../aplication/entities/aplication.entity';
+import { CreateClientDto } from '../dto/create-client.dto';
+import { v4 as uuid } from 'uuid';
 
 @Index('client_cli_email_Idx', ['email'], { unique: true })
 @Index('pkclient', ['id'], { unique: true })
@@ -9,7 +11,7 @@ import { AplicationEntity } from '../../aplication/entities/aplication.entity';
 @Entity('client', { schema: 'public' })
 export class ClientEntity {
   @Column('uuid', { primary: true, name: 'cli_id' })
-  id: string;
+  id: string = uuid();
 
   @Column('character varying', { name: 'cli_full_name', length: 500 })
   fullName: string;
@@ -44,12 +46,27 @@ export class ClientEntity {
   })
   deletedAt: Date | null;
 
-  @OneToOne(() => AccountEntity, (account) => account.cli)
+  @OneToOne(() => AccountEntity, (account) => account.cli, {
+    cascade: ['insert'],
+  })
   account: AccountEntity;
 
-  @OneToOne(() => AplicationEntity, (app) => app.cli)
+  @OneToOne(() => AplicationEntity, (app) => app.cli, {
+    cascade: ['insert'],
+  })
   app: AplicationEntity;
 
   @OneToMany(() => TokenEntity, (token) => token.cli)
   tokens: TokenEntity[];
+
+  constructor(createClientDto?: CreateClientDto) {
+    this.fullName = createClientDto?.fullName ?? '';
+    this.email = createClientDto?.email ?? '';
+    this.phone = createClientDto?.phone ?? '';
+    this.photo = createClientDto?.photo ?? '';
+    this.createdAt = new Date();
+    this.updatedAt = null;
+    this.account = new AccountEntity();
+    this.app = new AplicationEntity();
+  }
 }

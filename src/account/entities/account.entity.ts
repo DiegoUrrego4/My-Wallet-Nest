@@ -9,13 +9,14 @@ import {
 
 import { ClientEntity } from '../../client/entities/client.entity';
 import { MovementEntity } from '../../movement/entities/movement.entity';
+import { v4 as uuid } from 'uuid';
 
 @Index('pkaccount', ['accId'], { unique: true })
 @Index('account_cli_id_Idx', ['clientId'], { unique: true })
 @Entity('account', { schema: 'public' })
 export class AccountEntity {
   @Column('uuid', { primary: true, name: 'acc_id' })
-  accId: string;
+  accId: string = uuid();
 
   @Column('uuid', { name: 'cli_id' })
   clientId: string;

@@ -1,21 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ClientEntity } from './entities/client.entity';
+import { AccountEntity } from '../account/entities/account.entity';
 
 @Injectable()
 export class ClientService {
   constructor(
+    // private readonly logger = new Logger('ClientService'),
     @InjectRepository(ClientEntity)
     private clientRepository: Repository<ClientEntity>,
+    @InjectRepository(AccountEntity)
+    private accountRepository: Repository<AccountEntity>,
   ) {}
 
-  createClient(createClientDto: CreateClientDto) {
-    return {
-      token: 'Este es tu nuevo token',
-    };
+  async createClient(createClientDto: CreateClientDto) {
+    try {
+      // const { account = {}, ...clientInformation } = createClientDto;
+      // const client = this.clientRepository.create({
+      //   ...clientInformation,
+      //   account: this.accountRepository.create({ accBalance: '1000000' }),
+      // });
+      const client = new ClientEntity(createClientDto);
+      await this.clientRepository.save(client);
+      return client;
+    } catch (error) {
+      this.handleDBExceptions(error);
+    }
   }
 
   findAll() {
@@ -36,5 +54,14 @@ export class ClientService {
 
   remove(id: number) {
     return `This action removes a #${id} client`;
+  }
+
+  private handleDBExceptions(error: any) {
+    if (error.code === '23505') throw new BadRequestException(error.detail);
+    // this.logger.error(error);
+    console.error(error);
+    throw new InternalServerErrorException(
+      'Unexpected error. Check server logs',
+    );
   }
 }
