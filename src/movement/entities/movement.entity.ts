@@ -7,11 +7,11 @@ import { v4 as uuid } from 'uuid';
   ['accIdIncome', 'accIdOutcome'],
   {},
 )
-@Index('pkmovement', ['movId'], { unique: true })
+@Index('pkmovement', ['id'], { unique: true })
 @Entity('movement', { schema: 'public' })
 export class MovementEntity {
   @Column('uuid', { primary: true, name: 'mov_id' })
-  movId: string = uuid();
+  id: string = uuid();
 
   @Column('uuid', { name: 'acc_id_income' })
   accIdIncome: string;
@@ -38,13 +38,13 @@ export class MovementEntity {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
-  @JoinColumn([{ name: 'acc_id_income', referencedColumnName: 'accId' }])
+  @JoinColumn([{ name: 'acc_id_income', referencedColumnName: 'id' }])
   income: AccountEntity;
 
   @ManyToOne(() => AccountEntity, (account) => account.outcomes, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT',
   })
-  @JoinColumn([{ name: 'acc_id_outcome', referencedColumnName: 'accId' }])
+  @JoinColumn([{ name: 'acc_id_outcome', referencedColumnName: 'id' }])
   outcome: AccountEntity;
 }

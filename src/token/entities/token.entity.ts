@@ -2,21 +2,21 @@ import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { ClientEntity } from '../../client/entities/client.entity';
 import { v4 as uuid } from 'uuid';
 
-@Index('token_cli_id_Idx', ['cliId'], {})
-@Index('pktoken', ['tokId'], { unique: true })
+@Index('token_cli_id_Idx', ['clientId'], {})
+@Index('pktoken', ['id'], { unique: true })
 @Entity('token', { schema: 'public' })
 export class TokenEntity {
   @Column('uuid', { primary: true, name: 'tok_id' })
-  tokId: string = uuid();
+  id: string = uuid();
 
   @Column('uuid', { name: 'cli_id' })
-  cliId: string;
+  clientId: string;
 
   @Column('character varying', { name: 'tok_token', length: 500 })
-  tokToken: string;
+  token: string;
 
   @Column('timestamp without time zone', { name: 'tok_fecha_expiracion' })
-  tokFechaExpiracion: Date;
+  fechaExpiracion: Date;
 
   @ManyToOne(() => ClientEntity, (client) => client.tokens, {
     onDelete: 'RESTRICT',

@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
-  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,7 +14,6 @@ import { AplicationEntity } from 'src/aplication/entities/aplication.entity';
 @Injectable()
 export class ClientService {
   constructor(
-    // private readonly logger = new Logger('ClientService'),
     @InjectRepository(ClientEntity)
     private clientRepository: Repository<ClientEntity>,
     @InjectRepository(AccountEntity)
@@ -29,7 +27,6 @@ export class ClientService {
         account: new AccountEntity(),
         app: new AplicationEntity(),
       });
-      // const client = new ClientEntity(createClientDto);
       await this.clientRepository.save(client);
       return client;
     } catch (error) {
@@ -37,8 +34,14 @@ export class ClientService {
     }
   }
 
-  findAll() {
-    return `This action returns all client`;
+  async findAll() {
+    const clients = await this.clientRepository.find({
+      relations: {
+        account: true,
+        app: true,
+      },
+    });
+    return clients;
   }
 
   async findExistedClient(term: string) {
@@ -59,7 +62,6 @@ export class ClientService {
 
   private handleDBExceptions(error: any) {
     if (error.code === '23505') throw new BadRequestException(error.detail);
-    // this.logger.error(error);
     console.error(error);
     throw new InternalServerErrorException(
       'Unexpected error. Check server logs',

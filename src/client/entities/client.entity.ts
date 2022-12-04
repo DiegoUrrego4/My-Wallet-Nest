@@ -47,14 +47,12 @@ export class ClientEntity {
   deletedAt: Date | null;
 
   @OneToOne(() => AccountEntity, (account) => account.cli, {
-    // cascade: ['insert'],
     cascade: true,
     eager: true,
   })
   account: AccountEntity;
 
   @OneToOne(() => AplicationEntity, (app) => app.cli, {
-    // cascade: ['insert'],
     cascade: true,
     eager: true,
   })
@@ -62,15 +60,4 @@ export class ClientEntity {
 
   @OneToMany(() => TokenEntity, (token) => token.cli)
   tokens: TokenEntity[];
-
-  // constructor(createClientDto?: CreateClientDto) {
-  //   this.fullName = createClientDto?.fullName ?? '';
-  //   this.email = createClientDto?.email ?? '';
-  //   this.phone = createClientDto?.phone ?? '';
-  //   this.photo = createClientDto?.photo ?? '';
-  //   this.createdAt = new Date();
-  //   this.updatedAt = null;
-  //   this.account = new AccountEntity();
-  //   this.app = new AplicationEntity();
-  // }
 }
