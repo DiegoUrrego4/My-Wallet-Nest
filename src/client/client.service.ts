@@ -54,8 +54,9 @@ export class ClientService {
     } else {
       const queryBuilder = this.clientRepository.createQueryBuilder('cli');
       client = await queryBuilder
-        .where('cli.phone =:phone', {
+        .where('cli.phone =:phone OR cli.email =:email', {
           phone: term,
+          email: term,
         })
         .getOne();
     }

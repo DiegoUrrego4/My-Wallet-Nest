@@ -5,6 +5,7 @@ import {
   MaxLength,
   IsOptional,
   IsUUID,
+  Length,
 } from 'class-validator';
 import { v4 as uuid } from 'uuid';
 
@@ -20,6 +21,7 @@ export class CreateClientDto {
   email: string;
   @IsString()
   @IsNotEmpty()
+  @Length(10)
   @MaxLength(10)
   phone: string;
   @IsString()
