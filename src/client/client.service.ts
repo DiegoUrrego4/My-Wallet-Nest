@@ -10,6 +10,7 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ClientEntity } from './entities/client.entity';
 import { AccountEntity } from '../account/entities/account.entity';
+import { AplicationEntity } from 'src/aplication/entities/aplication.entity';
 
 @Injectable()
 export class ClientService {
@@ -23,12 +24,12 @@ export class ClientService {
 
   async createClient(createClientDto: CreateClientDto) {
     try {
-      // const { account = {}, ...clientInformation } = createClientDto;
-      // const client = this.clientRepository.create({
-      //   ...clientInformation,
-      //   account: this.accountRepository.create({ accBalance: '1000000' }),
-      // });
-      const client = new ClientEntity(createClientDto);
+      const client = this.clientRepository.create({
+        ...createClientDto,
+        account: new AccountEntity(),
+        app: new AplicationEntity(),
+      });
+      // const client = new ClientEntity(createClientDto);
       await this.clientRepository.save(client);
       return client;
     } catch (error) {

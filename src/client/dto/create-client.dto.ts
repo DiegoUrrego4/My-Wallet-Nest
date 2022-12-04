@@ -7,7 +7,6 @@ import {
   IsUUID,
 } from 'class-validator';
 import { v4 as uuid } from 'uuid';
-import { CreateAccountDto } from '../../account/dto/create-account.dto';
 
 export class CreateClientDto {
   @IsUUID()
@@ -26,6 +25,4 @@ export class CreateClientDto {
   @IsString()
   @IsNotEmpty()
   photo: string;
-  @IsOptional()
-  account?: CreateAccountDto;
 }
