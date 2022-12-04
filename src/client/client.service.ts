@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,6 +11,8 @@ import { UpdateClientDto } from './dto/update-client.dto';
 import { ClientEntity } from './entities/client.entity';
 import { AccountEntity } from '../account/entities/account.entity';
 import { AplicationEntity } from 'src/aplication/entities/aplication.entity';
+
+import { validate as isUUID } from 'uuid';
 
 @Injectable()
 export class ClientService {
@@ -45,10 +48,22 @@ export class ClientService {
   }
 
   async findExistedClient(term: string) {
-    const client: ClientEntity | null = await this.clientRepository.findOneBy({
-      id: term,
-    });
-    console.log('client :>> ', client);
+    let client: ClientEntity | null;
+    if (isUUID(term)) {
+      client = await this.clientRepository.findOneBy({ id: term });
+    } else {
+      const queryBuilder = this.clientRepository.createQueryBuilder('cli');
+      client = await queryBuilder
+        .where('cli.phone =:phone', {
+          phone: term,
+        })
+        .getOne();
+    }
+    if (!client) {
+      throw new NotFoundException(
+        `el cliente con el termino #${term} no fue encontrado en BD`,
+      );
+    }
     return client;
   }
 
