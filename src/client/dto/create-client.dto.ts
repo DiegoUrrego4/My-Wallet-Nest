@@ -23,7 +23,8 @@ export class CreateClientDto {
   @IsNotEmpty()
   @Length(10)
   @MaxLength(10)
-  phone: string;
+  @IsOptional()
+  phone?: string;
   @IsString()
   @IsNotEmpty()
   photo: string;

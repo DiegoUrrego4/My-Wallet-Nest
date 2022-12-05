@@ -21,9 +21,14 @@ export class AplicationController {
     return this.aplicationService.changeAppColor(createAplicationDto);
   }
 
-  @Get('theme/:id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.aplicationService.findAppColor();
+  @Get()
+  findAll() {
+    return this.aplicationService.findAll();
+  }
+
+  @Get(':clientId')
+  findOne(@Param('clientId', ParseUUIDPipe) clientId: string) {
+    return this.aplicationService.findOne(clientId);
   }
 
   @Patch(':id')
@@ -31,7 +36,7 @@ export class AplicationController {
     @Param('id') id: string,
     @Body() updateAplicationDto: UpdateAplicationDto,
   ) {
-    return this.aplicationService.update(+id, updateAplicationDto);
+    return this.aplicationService.update(id, updateAplicationDto);
   }
 
   @Delete(':id')

@@ -1,9 +1,10 @@
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateAplicationDto {
   @IsString()
   @IsNotEmpty()
-  appColorTheme: string;
+  appColor: string;
   @IsBoolean()
+  @IsOptional()
   changed?: boolean;
 }

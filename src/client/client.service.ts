@@ -58,6 +58,8 @@ export class ClientService {
           phone: term,
           email: term,
         })
+        .leftJoinAndSelect('cli.account', 'clientAccount')
+        .leftJoinAndSelect('cli.app', 'clientApp')
         .getOne();
     }
     if (!client) {
