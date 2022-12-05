@@ -104,7 +104,7 @@ movements: [
 ## Loans:
 
 <span style="color:green">[GET]</span> <span style="font-size:1.2em;">
-/api/v1/account/balance/:clientId ✅
+/api/v1/clients/:clientId ✅
 </span>
 
 ```

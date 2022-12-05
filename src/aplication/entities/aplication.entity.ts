@@ -1,20 +1,21 @@
 import { Column, Entity, Index, JoinColumn, OneToOne } from 'typeorm';
 import { ClientEntity } from '../../client/entities/client.entity';
+import { v4 as uuid } from 'uuid';
 
-@Index('pkapp', ['appId'], { unique: true })
-@Index('app_cli_id_Idx', ['cliId'], { unique: true })
+@Index('pkapp', ['id'], { unique: true })
+@Index('app_cli_id_Idx', ['clientId'], { unique: true })
 @Entity('app', { schema: 'public' })
 export class AplicationEntity {
   @Column('uuid', { primary: true, name: 'app_id' })
-  appId: string;
+  id: string = uuid();
 
   @Column('uuid', { name: 'cli_id' })
-  cliId: string;
+  clientId: string;
 
   @Column('character varying', {
     name: 'app_color',
     length: 30,
-    default: () => "'default'",
+    default: () => "'#007aff'",
   })
   appColor: string;
 
@@ -22,13 +23,13 @@ export class AplicationEntity {
     name: 'app_created_at',
     default: () => 'now()',
   })
-  appCreatedAt: Date;
+  createdAt: Date;
 
   @Column('timestamp without time zone', {
     name: 'app_updated_at',
     nullable: true,
   })
-  appUpdatedAt: Date | null;
+  updatedAt: Date | null;
 
   @OneToOne(() => ClientEntity, (client) => client.app, {
     onDelete: 'RESTRICT',
