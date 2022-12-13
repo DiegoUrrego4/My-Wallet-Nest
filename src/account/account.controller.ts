@@ -26,9 +26,9 @@ export class AccountController {
     return this.accountService.findAll();
   }
 
-  @Get('balance/:id')
+  @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.accountService.findBalance(id);
+    return this.accountService.findAccountById(id);
   }
 
   @Patch(':id')

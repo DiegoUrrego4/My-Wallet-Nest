@@ -1,8 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ClientService } from './client.service';
 import { ClientEntity } from './entities/client.entity';
+import { AccountEntity } from '../account/entities/account.entity';
+import { AplicationEntity } from '../aplication/entities/aplication.entity';
+import { MovementEntity } from '../movement/entities/movement.entity';
+import { TokenEntity } from '../token/entities/token.entity';
 
 export const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
   () => ({
@@ -27,6 +31,15 @@ describe('ClientService', () => {
           provide: getRepositoryToken(ClientEntity),
           useFactory: repositoryMockFactory,
         },
+      ],
+      imports: [
+        TypeOrmModule.forFeature([
+          ClientEntity,
+          AccountEntity,
+          AplicationEntity,
+          TokenEntity,
+          MovementEntity,
+        ]),
       ],
     }).compile();
 

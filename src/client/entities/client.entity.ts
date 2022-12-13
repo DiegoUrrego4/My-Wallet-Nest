@@ -2,7 +2,6 @@ import { Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
 import { AccountEntity } from '../../account/entities/account.entity';
 import { TokenEntity } from '../../token/entities/token.entity';
 import { AplicationEntity } from '../../aplication/entities/aplication.entity';
-import { CreateClientDto } from '../dto/create-client.dto';
 import { v4 as uuid } from 'uuid';
 
 @Index('client_cli_email_Idx', ['email'], { unique: true })

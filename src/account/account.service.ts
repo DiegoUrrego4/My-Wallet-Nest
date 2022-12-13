@@ -1,19 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { AccountEntity } from './entities/account.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AccountService {
+  constructor(
+    @InjectRepository(AccountEntity)
+    private accountRepository: Repository<AccountEntity>,
+  ) {}
   create(createAccountDto: CreateAccountDto) {
     return 'This action adds a new account';
   }
 
-  findAll() {
-    return `This action returns all account`;
+  async findAll() {
+    const accounts = await this.accountRepository.find({
+      relations: {
+        incomes: true,
+        outcomes: true,
+      },
+    });
+    return accounts;
   }
 
-  findBalance(id: string) {
-    return `This action returns a #${id} balance`;
+  async findAccountById(id: string) {
+    const account = this.accountRepository.findOneBy({ id });
+    if (!account) {
+      throw new NotFoundException(`Account with id ${id} not found `);
+    }
+    return account;
   }
 
   update(id: number, updateAccountDto: UpdateAccountDto) {

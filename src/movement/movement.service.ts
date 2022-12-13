@@ -1,11 +1,28 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreateMovementDto } from './dto/create-movement.dto';
 import { UpdateMovementDto } from './dto/update-movement.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MovementEntity } from './entities/movement.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MovementService {
-  create(createMovementDto: CreateMovementDto) {
-    return 'This action adds a new movement';
+  constructor(
+    @InjectRepository(MovementEntity)
+    private movementRepository: Repository<MovementEntity>,
+  ) {}
+  async create(createMovementDto: CreateMovementDto) {
+    try {
+      const movement = this.movementRepository.create(createMovementDto);
+      await this.movementRepository.save(movement);
+      return movement;
+    } catch (error) {
+      this.handleDBExceptions(error);
+    }
   }
 
   getLoan(createMovementDto: CreateMovementDto) {
@@ -17,7 +34,8 @@ export class MovementService {
   }
 
   findAll() {
-    return `This action returns all movement`;
+    const movements = this.movementRepository.find();
+    return movements;
   }
 
   findOne(id: string) {
@@ -34,5 +52,12 @@ export class MovementService {
 
   remove(id: number) {
     return `This action removes a #${id} movement`;
+  }
+  private handleDBExceptions(error: any) {
+    if (error.code === '23505') throw new BadRequestException(error.detail);
+    console.error(error);
+    throw new InternalServerErrorException(
+      'Unexpected error. Check server logs',
+    );
   }
 }
