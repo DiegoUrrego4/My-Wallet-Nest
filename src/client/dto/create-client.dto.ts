@@ -15,7 +15,7 @@ export class CreateClientDto {
   id?: string = uuid();
   @IsString()
   @IsNotEmpty()
-  fullName: string;
+  name: string;
   @IsEmail()
   @IsNotEmpty()
   email: string;
@@ -27,5 +27,5 @@ export class CreateClientDto {
   phone?: string;
   @IsString()
   @IsNotEmpty()
-  photo: string;
+  picture: string;
 }

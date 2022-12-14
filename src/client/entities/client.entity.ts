@@ -13,7 +13,7 @@ export class ClientEntity {
   id: string = uuid();
 
   @Column('character varying', { name: 'cli_full_name', length: 500 })
-  fullName: string;
+  name: string;
 
   @Column('character varying', { name: 'cli_email', length: 500 })
   email: string;
@@ -22,7 +22,7 @@ export class ClientEntity {
   phone: string;
 
   @Column('character varying', { name: 'cli_photo', length: 500 })
-  photo: string;
+  picture: string;
 
   @Column('integer', { name: 'cli_state', default: () => '1' })
   state: number;
