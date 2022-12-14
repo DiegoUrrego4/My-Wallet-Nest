@@ -19,16 +19,6 @@ export class MovementController {
     return this.movementService.create(createMovementDto);
   }
 
-  @Post('loans')
-  getLoan(@Body() createMovementDto: CreateMovementDto) {
-    return this.movementService.getLoan(createMovementDto);
-  }
-
-  @Post('payment')
-  payment(@Body() createMovementDto: CreateMovementDto) {
-    return this.movementService.payment(createMovementDto);
-  }
-
   @Get()
   findMovements() {
     return this.movementService.findAll();

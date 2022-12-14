@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -33,11 +38,30 @@ export class AccountService {
     return account;
   }
 
-  update(id: number, updateAccountDto: UpdateAccountDto) {
-    return `This action updates a #${id} account`;
+  async update(id: string, updateAccountDto: UpdateAccountDto) {
+    const account = await this.accountRepository.preload({
+      id,
+      ...updateAccountDto,
+      updatedAt: new Date(),
+    });
+    if (!account)
+      throw new NotFoundException(`Account with id: ${id} not found`);
+    try {
+      await this.accountRepository.save(account);
+      return account;
+    } catch (error) {
+      this.handleDBExceptions(error);
+    }
   }
 
   remove(id: number) {
     return `This action removes a #${id} account`;
+  }
+  private handleDBExceptions(error: any) {
+    if (error.code === '23505') throw new BadRequestException(error.detail);
+    console.error(error);
+    throw new InternalServerErrorException(
+      'Unexpected error. Check server logs',
+    );
   }
 }

@@ -7,10 +7,11 @@ import { AccountEntity } from '../account/entities/account.entity';
 import { AplicationEntity } from '../aplication/entities/aplication.entity';
 import { TokenEntity } from '../token/entities/token.entity';
 import { MovementEntity } from './entities/movement.entity';
+import { AccountService } from '../account/account.service';
 
 @Module({
   controllers: [MovementController],
-  providers: [MovementService],
+  providers: [MovementService, AccountService],
   exports: [MovementService],
   imports: [
     TypeOrmModule.forFeature([
