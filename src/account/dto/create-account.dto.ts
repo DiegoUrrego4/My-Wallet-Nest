@@ -3,16 +3,16 @@ import { IsNumber, IsOptional } from 'class-validator';
 export class CreateAccountDto {
   id: string;
   @IsNumber()
-  balance: string;
+  balance?: string;
   @IsNumber()
-  credit: string;
+  credit?: string;
   @IsNumber()
   @IsOptional()
-  state: number;
+  state?: number;
   @IsOptional()
-  createdAt: Date;
+  createdAt?: Date;
   @IsOptional()
-  updatedAt: Date | null | undefined;
+  updatedAt?: Date | null;
   @IsOptional()
-  deletedAt: Date | null | undefined;
+  deletedAt?: Date | null;
 }

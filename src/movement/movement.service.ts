@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MovementEntity } from './entities/movement.entity';
 import { Repository } from 'typeorm';
 import { AccountService } from '../account/account.service';
+import { ClientService } from '../client/client.service';
 
 @Injectable()
 export class MovementService {
@@ -16,6 +17,7 @@ export class MovementService {
     @InjectRepository(MovementEntity)
     private movementRepository: Repository<MovementEntity>,
     private accountService: AccountService,
+    private clientService: ClientService,
   ) {}
   async create(createMovementDto: CreateMovementDto) {
     const initialAccountValue = {
@@ -98,12 +100,28 @@ export class MovementService {
     this.accountService.update(account.id, account);
   }
 
-  findAll() {
-    const movements = this.movementRepository.find();
-    return movements;
+  async findAll() {
+    // let movementsMock = [];
+    const movements = await this.movementRepository.find();
+    // for (let i = 0; i < movements.length; i++) {
+    //   const foto = await this.accountService.getPhoto(movements[i].idIncome);
+    //   movementsMock.push(foto);
+    //   console.log('FOTO FOR', movementsMock);
+    // }
+    // console.log('FOTO AFUERA FOR', movementsMock);
+
+    const movementsWithPicture = await Promise.all(
+      movements.map(async (movement) => ({
+        ...movement,
+        pictureIncome: await this.accountService.getPhoto(movement.idIncome),
+        pictureOutcome: await this.accountService.getPhoto(movement.idOutcome),
+      })),
+    );
+    return movementsWithPicture;
   }
 
   findOne(id: string) {
+    this.accountService.getPhoto(id);
     return `This action returns a #${id} movement`;
   }
 

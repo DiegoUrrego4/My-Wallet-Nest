@@ -1,3 +1,4 @@
+import { ClientService } from './../client/client.service';
 import { Module } from '@nestjs/common';
 import { MovementService } from './movement.service';
 import { MovementController } from './movement.controller';
@@ -11,7 +12,7 @@ import { AccountService } from '../account/account.service';
 
 @Module({
   controllers: [MovementController],
-  providers: [MovementService, AccountService],
+  providers: [MovementService, AccountService, ClientService],
   exports: [MovementService],
   imports: [
     TypeOrmModule.forFeature([

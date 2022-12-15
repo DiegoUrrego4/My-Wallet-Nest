@@ -30,11 +30,21 @@ export class AccountService {
     return accounts;
   }
 
-  async findAccountById(id: string) {
-    const account = this.accountRepository.findOneBy({ id });
+  async findAccountById(accountId: string) {
+    const account = await this.accountRepository.findOne({
+      where: { id: accountId },
+      // relations: { cli: true },
+    });
     if (!account) {
-      throw new NotFoundException(`Account with id ${id} not found `);
+      throw new NotFoundException(`Account with id ${accountId} not found `);
     }
+    account.incomes = await Promise.all(
+      account.incomes.map(async (income) => ({
+        ...income,
+        pictureIncome: await this.getPhoto(income.idIncome),
+        pictureOutcome: await this.getPhoto(income.idOutcome),
+      })),
+    );
     return account;
   }
 
@@ -57,6 +67,17 @@ export class AccountService {
   remove(id: number) {
     return `This action removes a #${id} account`;
   }
+
+  async getPhoto(id: string) {
+    const account = await this.accountRepository.findOne({
+      where: {
+        id: id,
+      },
+      relations: { cli: true },
+    });
+    return account?.cli.picture;
+  }
+
   private handleDBExceptions(error: any) {
     if (error.code === '23505') throw new BadRequestException(error.detail);
     console.error(error);

@@ -23,9 +23,9 @@ export class MovementController {
   findMovements() {
     return this.movementService.findAll();
   }
-  @Get(':movementId:')
-  findOneMovement(@Param('movementId') movementId: string) {
-    return this.movementService.findOne(movementId);
+  @Get(':id')
+  findOneMovement(@Param('id') id: string) {
+    return this.movementService.findOne(id);
   }
 
   @Patch(':id')
