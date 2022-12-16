@@ -26,6 +26,11 @@ export class AccountController {
     return this.accountService.findAll();
   }
 
+  @Get(':id/pictures')
+  findOneWithPictures(@Param('id', ParseUUIDPipe) id: string) {
+    return this.accountService.findMovementsWithPictures(id);
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.accountService.findAccountById(id);

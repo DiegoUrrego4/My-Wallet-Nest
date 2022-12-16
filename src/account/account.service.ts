@@ -38,6 +38,18 @@ export class AccountService {
     if (!account) {
       throw new NotFoundException(`Account with id ${accountId} not found `);
     }
+
+    return account;
+  }
+
+  async findMovementsWithPictures(accountId: string) {
+    const account = await this.accountRepository.findOne({
+      where: { id: accountId },
+      // relations: { cli: true },
+    });
+    if (!account) {
+      throw new NotFoundException(`Account with id ${accountId} not found `);
+    }
     account.incomes = await Promise.all(
       account.incomes.map(async (income) => ({
         ...income,

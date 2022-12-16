@@ -105,23 +105,8 @@ export class MovementService {
   }
 
   async findAll() {
-    // let movementsMock = [];
     const movements = await this.movementRepository.find();
-    // for (let i = 0; i < movements.length; i++) {
-    //   const foto = await this.accountService.getPhoto(movements[i].idIncome);
-    //   movementsMock.push(foto);
-    //   console.log('FOTO FOR', movementsMock);
-    // }
-    // console.log('FOTO AFUERA FOR', movementsMock);
-
-    const movementsWithPicture = await Promise.all(
-      movements.map(async (movement) => ({
-        ...movement,
-        pictureIncome: await this.accountService.getPhoto(movement.idIncome),
-        pictureOutcome: await this.accountService.getPhoto(movement.idOutcome),
-      })),
-    );
-    return movementsWithPicture;
+    return movements;
   }
 
   findOne(id: string) {
