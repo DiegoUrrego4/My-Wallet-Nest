@@ -45,10 +45,18 @@ export class AccountService {
         pictureOutcome: await this.getPhoto(income.idOutcome),
       })),
     );
+    account.outcomes = await Promise.all(
+      account.outcomes.map(async (outcome) => ({
+        ...outcome,
+        pictureIncome: await this.getPhoto(outcome.idIncome),
+        pictureOutcome: await this.getPhoto(outcome.idOutcome),
+      })),
+    );
     return account;
   }
 
   async update(id: string, updateAccountDto: UpdateAccountDto) {
+    // console.log('updateAccountDto', updateAccountDto);
     const account = await this.accountRepository.preload({
       id,
       ...updateAccountDto,

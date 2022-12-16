@@ -35,8 +35,11 @@ export class MovementService {
     };
     try {
       const { idIncome, idOutcome, amount } = createMovementDto;
-
+      console.log('idIncome :>> ', idIncome);
+      console.log('idOutcome :>> ', idOutcome);
       if (idIncome === idOutcome) {
+        console.log('ENTRANDO a IF LOAN ');
+
         this.loan(idIncome, amount);
       } else {
         // this.payment(idIncome, idOutcome, amount);
@@ -72,6 +75,7 @@ export class MovementService {
 
       const movement = this.movementRepository.create(createMovementDto);
       await this.movementRepository.save(movement);
+      console.log(movement);
       return movement;
     } catch (error) {
       this.handleDBExceptions(error);
