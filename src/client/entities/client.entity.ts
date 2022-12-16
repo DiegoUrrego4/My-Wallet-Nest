@@ -2,7 +2,6 @@ import { Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
 import { AccountEntity } from '../../account/entities/account.entity';
 import { TokenEntity } from '../../token/entities/token.entity';
 import { AplicationEntity } from '../../aplication/entities/aplication.entity';
-import { CreateClientDto } from '../dto/create-client.dto';
 import { v4 as uuid } from 'uuid';
 
 @Index('client_cli_email_Idx', ['email'], { unique: true })
@@ -14,7 +13,7 @@ export class ClientEntity {
   id: string = uuid();
 
   @Column('character varying', { name: 'cli_full_name', length: 500 })
-  fullName: string;
+  name: string;
 
   @Column('character varying', { name: 'cli_email', length: 500 })
   email: string;
@@ -23,7 +22,7 @@ export class ClientEntity {
   phone: string;
 
   @Column('character varying', { name: 'cli_photo', length: 500 })
-  photo: string;
+  picture: string;
 
   @Column('integer', { name: 'cli_state', default: () => '1' })
   state: number;

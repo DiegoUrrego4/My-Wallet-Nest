@@ -43,7 +43,7 @@ describe('AccountService', () => {
       phone: '3221234567',
       photo: 'https://photo.jpg',
     };
-    expect(service.findBalance(client.id)).toEqual({
+    expect(service.findAccountById(client.id)).toEqual({
       availableCapacity: 47700000,
     });
   });

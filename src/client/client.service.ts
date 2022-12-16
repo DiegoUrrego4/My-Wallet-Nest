@@ -10,7 +10,7 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { ClientEntity } from './entities/client.entity';
 import { AccountEntity } from '../account/entities/account.entity';
-import { AplicationEntity } from 'src/aplication/entities/aplication.entity';
+import { AplicationEntity } from '../aplication/entities/aplication.entity';
 
 import { validate as isUUID } from 'uuid';
 
@@ -24,6 +24,13 @@ export class ClientService {
   ) {}
 
   async createClient(createClientDto: CreateClientDto) {
+    const { email } = createClientDto;
+    const existedClient = await this.findExistedClient(email);
+    if (existedClient)
+      return {
+        message: 'Cliente existente en BD',
+        client: existedClient,
+      };
     try {
       const client = this.clientRepository.create({
         ...createClientDto,
@@ -46,6 +53,16 @@ export class ClientService {
     });
     return clients;
   }
+  findClientById = async (term: string) => {
+    const client = await this.findExistedClient(term);
+    if (!client) {
+      // return false;
+      throw new NotFoundException(
+        `el cliente con el termino #${term} no fue encontrado en BD`,
+      );
+    }
+    return client;
+  };
 
   async findExistedClient(term: string) {
     let client: ClientEntity | null;
@@ -63,9 +80,10 @@ export class ClientService {
         .getOne();
     }
     if (!client) {
-      throw new NotFoundException(
-        `el cliente con el termino #${term} no fue encontrado en BD`,
-      );
+      return false;
+      // throw new NotFoundException(
+      //   `el cliente con el termino #${term} no fue encontrado en BD`,
+      // );
     }
     return client;
   }

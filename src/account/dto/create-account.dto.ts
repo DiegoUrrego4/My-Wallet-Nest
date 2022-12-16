@@ -1,6 +1,7 @@
 import { IsNumber, IsOptional } from 'class-validator';
 
 export class CreateAccountDto {
+  id: string;
   @IsNumber()
   balance?: string;
   @IsNumber()
@@ -11,7 +12,7 @@ export class CreateAccountDto {
   @IsOptional()
   createdAt?: Date;
   @IsOptional()
-  updatedAt?: Date;
+  updatedAt?: Date | null;
   @IsOptional()
-  deletedAt?: Date;
+  deletedAt?: Date | null;
 }

@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 @Index(
   'movement_acc_id_income_acc_id_outcome_Idx',
-  ['accIdIncome', 'accIdOutcome'],
+  ['idIncome', 'idOutcome'],
   {},
 )
 @Index('pkmovement', ['id'], { unique: true })
@@ -14,25 +14,25 @@ export class MovementEntity {
   id: string = uuid();
 
   @Column('uuid', { name: 'acc_id_income' })
-  accIdIncome: string;
+  idIncome: string;
 
   @Column('uuid', { name: 'acc_id_outcome' })
-  accIdOutcome: string;
+  idOutcome: string;
 
   @Column('character varying', { name: 'mov_reason', length: 500 })
-  movReason: string;
+  reason: string;
 
   @Column('bigint', { name: 'mov_amount' })
-  movAmount: string;
+  amount: string;
 
   @Column('integer', { name: 'mov_fees', default: () => '1' })
-  movFees: number;
+  fees: number;
 
   @Column('timestamp without time zone', {
     name: 'mov_datetime',
     default: () => 'now()',
   })
-  movDatetime: Date;
+  datetime: Date;
 
   @ManyToOne(() => AccountEntity, (account) => account.incomes, {
     onDelete: 'RESTRICT',
