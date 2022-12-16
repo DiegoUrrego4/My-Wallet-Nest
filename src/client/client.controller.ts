@@ -11,7 +11,7 @@ import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 
-@Controller('client')
+@Controller('clients')
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
@@ -27,7 +27,7 @@ export class ClientController {
 
   @Get(':term')
   findOne(@Param('term') term: string) {
-    return this.clientService.findExistedClient(term);
+    return this.clientService.findClientById(term);
   }
 
   @Patch(':id')

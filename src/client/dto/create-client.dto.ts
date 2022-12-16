@@ -1,17 +1,31 @@
-import { IsString, IsEmail, IsNotEmpty, MaxLength } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsNotEmpty,
+  MaxLength,
+  IsOptional,
+  IsUUID,
+  Length,
+} from 'class-validator';
+import { v4 as uuid } from 'uuid';
 
 export class CreateClientDto {
+  @IsUUID()
+  @IsOptional()
+  id?: string = uuid();
   @IsString()
   @IsNotEmpty()
-  fullName: string;
+  name: string;
   @IsEmail()
   @IsNotEmpty()
   email: string;
   @IsString()
   @IsNotEmpty()
+  @Length(10)
   @MaxLength(10)
-  phone: string;
+  @IsOptional()
+  phone?: string;
   @IsString()
   @IsNotEmpty()
-  photo: string;
+  picture: string;
 }

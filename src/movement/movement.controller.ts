@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { MovementService } from './movement.service';
-import { CreateMovementDto, CreatePaymentDto, UpdateMovementDto } from './dto';
+import { CreateMovementDto, UpdateMovementDto } from './dto';
 
 @Controller('movements')
 export class MovementController {
@@ -19,19 +19,13 @@ export class MovementController {
     return this.movementService.create(createMovementDto);
   }
 
-  @Post('loans')
-  getLoan(@Body() createPaymentDto: CreatePaymentDto) {
-    return this.movementService.getLoan(createPaymentDto);
+  @Get()
+  findMovements() {
+    return this.movementService.findAll();
   }
-
-  @Post('payment')
-  payment(@Body() createPaymentDto: CreatePaymentDto) {
-    return this.movementService.payment(createPaymentDto);
-  }
-
-  @Get('movement/:movementId:')
-  findOneMovement(@Param('movementId') movementId: string) {
-    return this.movementService.findOne(movementId);
+  @Get(':id')
+  findOneMovement(@Param('id') id: string) {
+    return this.movementService.findOne(id);
   }
 
   @Patch(':id')

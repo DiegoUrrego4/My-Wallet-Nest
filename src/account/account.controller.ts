@@ -26,14 +26,19 @@ export class AccountController {
     return this.accountService.findAll();
   }
 
-  @Get('balance/:id')
+  @Get(':id/pictures')
+  findOneWithPictures(@Param('id', ParseUUIDPipe) id: string) {
+    return this.accountService.findMovementsWithPictures(id);
+  }
+
+  @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.accountService.findBalance(id);
+    return this.accountService.findAccountById(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
-    return this.accountService.update(+id, updateAccountDto);
+    return this.accountService.update(id, updateAccountDto);
   }
 
   @Delete(':id')

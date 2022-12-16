@@ -2,6 +2,7 @@ import { Column, Entity, Index, OneToMany, OneToOne } from 'typeorm';
 import { AccountEntity } from '../../account/entities/account.entity';
 import { TokenEntity } from '../../token/entities/token.entity';
 import { AplicationEntity } from '../../aplication/entities/aplication.entity';
+import { v4 as uuid } from 'uuid';
 
 @Index('client_cli_email_Idx', ['email'], { unique: true })
 @Index('pkclient', ['id'], { unique: true })
@@ -9,10 +10,10 @@ import { AplicationEntity } from '../../aplication/entities/aplication.entity';
 @Entity('client', { schema: 'public' })
 export class ClientEntity {
   @Column('uuid', { primary: true, name: 'cli_id' })
-  id: string;
+  id: string = uuid();
 
   @Column('character varying', { name: 'cli_full_name', length: 500 })
-  fullName: string;
+  name: string;
 
   @Column('character varying', { name: 'cli_email', length: 500 })
   email: string;
@@ -21,7 +22,7 @@ export class ClientEntity {
   phone: string;
 
   @Column('character varying', { name: 'cli_photo', length: 500 })
-  photo: string;
+  picture: string;
 
   @Column('integer', { name: 'cli_state', default: () => '1' })
   state: number;
@@ -44,10 +45,16 @@ export class ClientEntity {
   })
   deletedAt: Date | null;
 
-  @OneToOne(() => AccountEntity, (account) => account.cli)
+  @OneToOne(() => AccountEntity, (account) => account.cli, {
+    cascade: true,
+    eager: true,
+  })
   account: AccountEntity;
 
-  @OneToOne(() => AplicationEntity, (app) => app.cli)
+  @OneToOne(() => AplicationEntity, (app) => app.cli, {
+    cascade: true,
+    eager: true,
+  })
   app: AplicationEntity;
 
   @OneToMany(() => TokenEntity, (token) => token.cli)
